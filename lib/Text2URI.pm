@@ -9,6 +9,11 @@ has iconv => (
     default => sub {Text::Iconv->new('UTF-8', 'ASCII//TRANSLIT')}
 );
 
+has old_alphanumeric_regexp => (
+    is   => 'rw',
+    isa  => 'Int',
+    default => sub {0}
+);
 
 sub translate {
     my ($self, $text, $sep) = @_;
@@ -19,7 +24,11 @@ sub translate {
     $text =~ s/^\s+//o;
     $text =~ s/\s+$//o;
 
-    $text =~ s/\W+/$sep/go;
+    if ($self->old_alphanumeric_regexp){
+        $text =~ s/\W+/$sep/go;
+    }else{
+        $text =~ s/[^\w\.]+/$sep/go;
+    }
     $text =~ s/$sep+/$sep/go;
     $text =~ s/$sep$//o;
     $text =~ s/^$sep//o;
@@ -54,6 +63,10 @@ version 0.1
 
     print $t->translate("Sell your house",'_');
     # sell_your_house
+
+    # you can pass C<old_alphanumeric_regexp => 1> to alternate between C<\W+> or C<[^\w\.]+> regexp.
+    # default to old_alphanumeric_regexp => 0 that means C<[^\w\.]+>
+    # you can change it between calls too. $t->old_alphanumeric_regexp(1) to enable.
 
 =head1 DESCRIPTION
 
