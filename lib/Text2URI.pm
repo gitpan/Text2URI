@@ -1,12 +1,13 @@
 package Text2URI;
 use Moose;
-use Text::Iconv;
+use Text::Unaccent;
 
-has iconv => (
+our $VERSION = "0.3001";
+
+has encoding => (
     is   => 'rw',
-    isa  => 'Text::IconvPtr',
-    lazy => 1,
-    default => sub {Text::Iconv->new('UTF-8', 'ASCII//TRANSLIT')}
+    isa  => 'Str',
+    default => sub {'UTF-8'}
 );
 
 has old_alphanumeric_regexp => (
@@ -19,7 +20,7 @@ sub translate {
     my ($self, $text, $sep) = @_;
     $sep ||= '-';
 
-    $text = lc $self->iconv->convert(  $text );
+    $text = lc unac_string( $self->encoding, $text );
 
     $text =~ s/^\s+//o;
     $text =~ s/\s+$//o;
@@ -50,13 +51,14 @@ Text2URI
 
 =head1 VERSION
 
-version 0.1
+version 0.3001
 
 =head1 SYNOPSIS
 
     use Text2URI;
 
     my $t = new Text2URI();
+    # sane as new Text2URI( encoding => 'UTF-8' );
 
     print $t->translate("Atenção SomeText (0)2302-3234   otherthing    !!");
     # atencao-sometext-0-2302-3234-otherthing
@@ -68,6 +70,7 @@ version 0.1
     # default to old_alphanumeric_regexp => 0 that means C<[^\w\.]+>
     # you can change it between calls too. $t->old_alphanumeric_regexp(1) to enable.
 
+
 =head1 DESCRIPTION
 
 Simple but effective transform text to a "url friendly" string! Just it
@@ -75,6 +78,13 @@ Simple but effective transform text to a "url friendly" string! Just it
 =head1 NAME
 
 Text2URI - Transform text to a "url friendly" string
+
+
+=head1 SEE ALSO
+
+Text::Unaccent - Remove accents from a string. I'm using this since v0.3001 because lots of plataforms broken with ASNCI/Translit.
+
+
 
 =head1 AUTHOR
 

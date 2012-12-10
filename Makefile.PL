@@ -25,9 +25,9 @@ my %WriteMakefileArgs = (
   "NAME" => "Text2URI",
   "PREREQ_PM" => {
     "Moose" => 0,
-    "Text::Iconv" => 0
+    "Text::Unaccent" => 0
   },
-  "VERSION" => "0.2",
+  "VERSION" => "0.3001",
   "test" => {
     "TESTS" => "t/*.t"
   }
