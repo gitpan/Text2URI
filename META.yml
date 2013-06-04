@@ -18,4 +18,4 @@ name: Text2URI
 requires:
   Moose: 0
   Text::Unaccent: 0
-version: 0.30012
+version: 0.30014
