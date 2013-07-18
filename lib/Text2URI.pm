@@ -1,14 +1,8 @@
 package Text2URI;
 use Moose;
-use Text::Unaccent;
+use Text::Unaccent::PurePerl qw(unac_string);
 
-our $VERSION = "0.3001";
-
-has encoding => (
-    is   => 'rw',
-    isa  => 'Str',
-    default => sub {'UTF-8'}
-);
+our $VERSION = "0.4";
 
 has old_alphanumeric_regexp => (
     is   => 'rw',
@@ -20,7 +14,7 @@ sub translate {
     my ($self, $text, $sep) = @_;
     $sep ||= '-';
 
-    $text = lc unac_string( $self->encoding, $text );
+    $text = lc unac_string(   $text );
 
     $text =~ s/^\s+//o;
     $text =~ s/\s+$//o;
@@ -58,7 +52,6 @@ version 0.3001
     use Text2URI;
 
     my $t = new Text2URI();
-    # sane as new Text2URI( encoding => 'UTF-8' );
 
     print $t->translate("Atenção SomeText (0)2302-3234   otherthing    !!");
     # atencao-sometext-0-2302-3234-otherthing

@@ -21,14 +21,14 @@ my %WriteMakefileArgs = (
   "NAME" => "Text2URI",
   "PREREQ_PM" => {
     "Moose" => 0,
-    "Text::Unaccent" => 0
+    "Text::Unaccent::PurePerl" => 0
   },
   "TEST_REQUIRES" => {
     "Test::More" => 0,
     "strict" => 0,
     "utf8" => 0
   },
-  "VERSION" => "0.30014",
+  "VERSION" => "0.4",
   "test" => {
     "TESTS" => "t/*.t"
   }

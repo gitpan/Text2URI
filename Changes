@@ -1,5 +1,9 @@
 Revision history for perl module Text2URI
 
+0.30014 2013-07-18
+    - Use Text::Unaccent::PurePerl instead of Text::Unaccent because undefined symbol: Perl_Imarkstack_ptr_ptr at debian 5 x86_64-linux =/
+    - No more encoding param, encode your string to perl-encoded before pass-it.
+
 0.30014 2013-01-04
     - Changelog version match last version!
 
